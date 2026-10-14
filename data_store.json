@@ -1,0 +1,160 @@
+{
+  "events": [
+    {
+      "event_id": "EVT-SEED-001",
+      "timestamp": "2026-10-04T09:34:06.724Z",
+      "epoch_ms": 1791106446724,
+      "source_ip": "192.168.1.105",
+      "destination_ip": "10.0.0.1",
+      "source_port": 52140,
+      "destination_port": 443,
+      "protocol": "HTTPS",
+      "event_type": "AUTHENTICATION",
+      "action": "LOGIN",
+      "status": "SUCCESS",
+      "username": "alex.vance",
+      "endpoint": "/api/auth/login",
+      "method": "POST",
+      "user_agent": "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7)",
+      "domain": "web",
+      "metadata": {
+        "session_type": "standard_user"
+      }
+    },
+    {
+      "event_id": "EVT-SEED-002",
+      "timestamp": "2026-10-04T09:34:36.724Z",
+      "epoch_ms": 1791106476724,
+      "source_ip": "192.168.1.110",
+      "destination_ip": "10.0.0.1",
+      "protocol": "HTTP",
+      "event_type": "HTTP_REQUEST",
+      "action": "REQUEST",
+      "status": "SUCCESS",
+      "endpoint": "/api/ecommerce/products",
+      "method": "GET",
+      "domain": "ecommerce",
+      "metadata": {
+        "response_time_ms": 18
+      }
+    },
+    {
+      "event_id": "EVT-SEED-003",
+      "timestamp": "2026-10-04T09:35:06.724Z",
+      "epoch_ms": 1791106506724,
+      "source_ip": "192.168.1.110",
+      "destination_ip": "10.0.0.1",
+      "protocol": "HTTP",
+      "event_type": "HTTP_REQUEST",
+      "action": "REQUEST",
+      "status": "SUCCESS",
+      "endpoint": "/api/ecommerce/cart",
+      "method": "GET",
+      "domain": "ecommerce",
+      "metadata": {
+        "items_in_cart": 2
+      }
+    },
+    {
+      "event_id": "EVT-SEED-004",
+      "timestamp": "2026-10-04T09:35:36.724Z",
+      "epoch_ms": 1791106536724,
+      "source_ip": "192.168.1.140",
+      "destination_ip": "10.10.0.10",
+      "source_port": 49120,
+      "destination_port": 443,
+      "protocol": "HTTPS",
+      "event_type": "NETWORK_CONNECTION",
+      "action": "PORT_CHECK",
+      "status": "SUCCESS",
+      "domain": "banking",
+      "metadata": {
+        "target_host": "aegis-gateway.internal"
+      }
+    }
+  ],
+  "rules": [
+    {
+      "rule_id": "BRUTE-001",
+      "name": "Brute Force Login Detection",
+      "description": "Detects repeated failed authentication attempts from the same source IP within a sliding 60-second window.",
+      "attack_type": "Brute Force Authentication",
+      "severity": "HIGH",
+      "threshold": 3,
+      "time_window": 60,
+      "enabled": true,
+      "domain": "ALL"
+    },
+    {
+      "rule_id": "SCAN-001",
+      "name": "Port Scan Detection",
+      "description": "Detects a source IP attempting connections to more than 15 unique destination ports on the same controlled target within 10 seconds.",
+      "attack_type": "Reconnaissance / Port Scan",
+      "severity": "HIGH",
+      "threshold": 15,
+      "time_window": 10,
+      "enabled": true,
+      "domain": "ALL"
+    },
+    {
+      "rule_id": "RATE-001",
+      "name": "High Request Rate Detection",
+      "description": "Detects unusually aggressive HTTP/API activity exceeding 100 requests from a single source IP within 10 seconds.",
+      "attack_type": "Application Rate Abuse / Scraping / DoS",
+      "severity": "HIGH",
+      "threshold": 100,
+      "time_window": 10,
+      "enabled": true,
+      "domain": "ALL"
+    },
+    {
+      "rule_id": "IP-001",
+      "name": "Suspicious IP Watchlist Detection",
+      "description": "Detects incoming network or application connections originating from an IP listed in the configured security watchlist.",
+      "attack_type": "Watchlist Indicator Match",
+      "severity": "HIGH",
+      "threshold": 1,
+      "time_window": 0,
+      "enabled": true,
+      "domain": "ALL"
+    }
+  ],
+  "detections": [],
+  "alerts": [],
+  "watchlist": [
+    {
+      "ip": "203.0.113.25",
+      "label": "Configured Demo Watchlist #1",
+      "added_at": "2026-10-03T09:35:51.360Z",
+      "category": "Known Hostile Botnet Probe (RFC 5737 Test IP)",
+      "notes": "Configured security watchlist test address for demonstration purposes."
+    },
+    {
+      "ip": "198.51.100.10",
+      "label": "Configured Demo Watchlist #2",
+      "added_at": "2026-10-03T21:35:51.360Z",
+      "category": "Flagged Credential Harvester (RFC 5737 Test IP)",
+      "notes": "Configured security watchlist test address for demonstration purposes."
+    }
+  ],
+  "users": [
+    {
+      "id": "usr-1",
+      "username": "alex.vance",
+      "passwordHash": "78b7b972a829e52141738ccf51efa6c3f703dc7640f627cfc70c6acadcddac36",
+      "domain": "web"
+    },
+    {
+      "id": "usr-2",
+      "username": "shopper_carter",
+      "passwordHash": "fed4f57f9ebb75ca591c2d0d0924ed16f9c6af36d8bb3e3ca1b45e287d81bd90",
+      "domain": "ecommerce"
+    },
+    {
+      "id": "usr-3",
+      "username": "fintech_admin",
+      "passwordHash": "0af041a6761892b0b513093a1c7d33c1a82e6ab408a2967a955c73e3efe78a86",
+      "domain": "banking"
+    }
+  ]
+}

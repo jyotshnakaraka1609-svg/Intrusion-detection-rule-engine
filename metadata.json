@@ -1,0 +1,6 @@
+{
+  "name": "Sentinel Rule Engine",
+  "description": "Real-Time Rule-Based Intrusion Detection & Security Monitoring Platform across Web, E-Commerce, and Banking domains.",
+  "requestFramePermissions": [],
+  "majorCapabilities": ["MAJOR_CAPABILITY_SERVER_SIDE_GEMINI_API"]
+}
